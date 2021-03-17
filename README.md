@@ -13,8 +13,21 @@ this repository.
 
 ### 1.2 Setup
 
+Create a python virtual environment and install the required packages.
+
 ``` bash
 virtualenv venv -p python3;
 source venv/bin/activate;
 pip install -r requirements.txt;
 ```
+
+### 1.3 Running
+
+Launch the [init_db.py](./src/init_db.py) script.
+
+``` bash
+python src/init_db.py
+```
+
+The sqlite database file will be located at the root of the repository,
+under the name `db.sqlite`.
