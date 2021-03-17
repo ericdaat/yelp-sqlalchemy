@@ -3,3 +3,5 @@ data/
 .DS_Store
 .ipynb_checkpoints
 notebook/exploration.ipynb
+*.sqlite
+db.sqlite-journal
