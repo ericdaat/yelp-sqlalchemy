@@ -13,19 +13,19 @@ from src.model import (
 )
 
 
-def create_db():
-    if not database_exists(DATABASE_URL):
-        create_database(DATABASE_URL)
+def create_db(database_url):
+    if not database_exists(database_url):
+        create_database(database_url)
 
     metadata.drop_all(engine)
     metadata.create_all(engine)
 
 
-def insert_users():
+def insert_users(dataset_path):
     session = Session()
 
     dfs = pd.read_json(
-        os.path.join(DATASET_PATH, "yelp_academic_dataset_user.json"),
+        os.path.join(dataset_path, "yelp_academic_dataset_user.json"),
         lines=True,
         chunksize=10000
     )
@@ -40,11 +40,11 @@ def insert_users():
     session.close()
 
 
-def insert_businesses():
+def insert_businesses(dataset_path):
     session = Session()
 
     dfs = pd.read_json(
-        os.path.join(DATASET_PATH, "yelp_academic_dataset_business.json"),
+        os.path.join(dataset_path, "yelp_academic_dataset_business.json"),
         lines=True,
         chunksize=10000
     )
@@ -93,11 +93,11 @@ def insert_businesses():
     session.close()
 
 
-def insert_reviews():
+def insert_reviews(dataset_path):
     session = Session()
 
     dfs = pd.read_json(
-        os.path.join(DATASET_PATH, "yelp_academic_dataset_review.json"),
+        os.path.join(dataset_path, "yelp_academic_dataset_review.json"),
         lines=True,
         chunksize=10000
     )
@@ -125,13 +125,13 @@ def insert_reviews():
 
 if __name__ == "__main__":
     logging.info("Creating database")
-    create_db()
+    create_db(DATABASE_URL)
 
     logging.info("Inserting users")
-    insert_users()
+    insert_users(DATASET_PATH)
 
     logging.info("Inserting businesses")
-    insert_businesses()
+    insert_businesses(DATASET_PATH)
 
     logging.info("Creating reviews")
-    insert_reviews()
+    insert_reviews(DATASET_PATH)

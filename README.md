@@ -8,8 +8,7 @@ relational database model using [SQL Alchemy](https://www.sqlalchemy.org/).
 ### 1.1 Dataset
 
 Download the dataset here: [Kaggle](https://www.kaggle.com/yelp-dataset/yelp-dataset).
-The dataset files must go in the [data](./data) folder, at the root of
-this repository.
+The dataset files must go in the [data/real](./data/real) folder.
 
 ### 1.2 Setup
 

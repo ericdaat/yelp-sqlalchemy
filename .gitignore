@@ -5,3 +5,4 @@ data/
 notebook/exploration.ipynb
 *.sqlite
 db.sqlite-journal
+.vscode
