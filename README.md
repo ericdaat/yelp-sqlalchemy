@@ -3,6 +3,10 @@
 This repository maps the [Yelp Dataset](https://www.yelp.com/dataset) to a
 relational database model using [SQL Alchemy](https://www.sqlalchemy.org/).
 
+![db-model](docs/db.png)
+
+The database model can also be found in [this PDF file](docs/db.pdf).
+
 ## 1. Usage
 
 ### 1.1 Dataset
