@@ -32,7 +32,27 @@ def insert_users(dataset_path):
 
     for df_chunk in dfs:
         for i, row in df_chunk.iterrows():
-            user = User(user_id=row["user_id"])
+            user = User(
+                user_id=row["user_id"],
+                review_count=row["review_count"],
+                yelping_since=row["yelping_since"],
+                useful=row["useful"],
+                funny=row["funny"],
+                cool=row["cool"],
+                fans=row["fans"],
+                average_stars=row["average_stars"],
+                compliment_hot=row["compliment_hot"],
+                compliment_more=row["compliment_more"],
+                compliment_profile=row["compliment_profile"],
+                compliment_cute=row["compliment_cute"],
+                compliment_list=row["compliment_list"],
+                compliment_note=row["compliment_note"],
+                compliment_plain=row["compliment_plain"],
+                compliment_cool=row["compliment_cool"],
+                compliment_funny=row["compliment_funny"],
+                compliment_writer=row["compliment_writer"],
+                compliment_photos=row["compliment_photos"]
+            )
             session.add(user)
 
         session.commit()

@@ -31,7 +31,25 @@ class User(Base):
     __tablename__ = "users"
 
     user_id = db.Column(db.String(64), primary_key=True)
-
+    review_count = db.Column(db.Integer())
+    yelping_since = db.Column(db.String(64))  # TODO: check why DateTime fails
+    useful = db.Column(db.Integer())
+    funny = db.Column(db.Integer())
+    cool = db.Column(db.Integer())
+    # TODO: add friends
+    fans = db.Column(db.Integer())
+    average_stars = db.Column(db.Float())
+    compliment_hot = db.Column(db.Integer())
+    compliment_more = db.Column(db.Integer())
+    compliment_profile = db.Column(db.Integer())
+    compliment_cute = db.Column(db.Integer())
+    compliment_list = db.Column(db.Integer())
+    compliment_note = db.Column(db.Integer())
+    compliment_plain = db.Column(db.Integer())
+    compliment_cool = db.Column(db.Integer())
+    compliment_funny = db.Column(db.Integer())
+    compliment_writer = db.Column(db.Integer())
+    compliment_photos = db.Column(db.Integer())
 
 class Business(Base):
     __tablename__ = "business"
