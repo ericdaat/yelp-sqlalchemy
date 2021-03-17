@@ -1,4 +1,4 @@
-from src.model import Session, User, Business, Review, Tip
+from src.model import Session, User, Business, Review, Tip, Checkin
 
 
 def test_users():
@@ -22,4 +22,10 @@ def test_review():
 def test_tip():
     session = Session()
     assert session.query(Tip).first()
+    session.close()
+
+
+def test_checkin():
+    session = Session()
+    assert session.query(Checkin).first()
     session.close()

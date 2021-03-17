@@ -1,5 +1,6 @@
 import os
 import logging
+from datetime import datetime
 from collections import defaultdict
 
 import pandas as pd
@@ -9,7 +10,7 @@ from src.config import DATABASE_URL, DATASET_PATH
 from src.model import (
     metadata, engine, Session,
     User, Business, BusinessCategory,
-    Review, Tip
+    Review, Tip, Checkin
 )
 
 
@@ -32,10 +33,15 @@ def insert_users(dataset_path):
 
     for df_chunk in dfs:
         for i, row in df_chunk.iterrows():
+            yelping_since = datetime.strptime(
+                row["yelping_since"],
+                "%Y-%m-%d %H:%M:%S"
+            )
+
             user = User(
                 user_id=row["user_id"],
                 review_count=row["review_count"],
-                yelping_since=row["yelping_since"],
+                yelping_since=yelping_since,
                 useful=row["useful"],
                 funny=row["funny"],
                 cool=row["cool"],
@@ -161,6 +167,33 @@ def insert_tips(dataset_path):
     session.close()
 
 
+def insert_checkins(dataset_path):
+    session = Session()
+
+    dfs = pd.read_json(
+        os.path.join(dataset_path, "yelp_academic_dataset_checkin.json"),
+        lines=True,
+        chunksize=10000
+    )
+
+    for df_chunk in dfs:
+        for i, row in df_chunk.iterrows():
+            for date in row["date"].split(","):
+                date = datetime.strptime(
+                    date.strip(),
+                    "%Y-%m-%d %H:%M:%S"
+                )
+
+                checkin = Checkin(
+                    date=date,
+                    business_id=row["business_id"]
+                )
+
+            session.add(checkin)
+        session.commit()
+    session.close()
+
+
 if __name__ == "__main__":
     logging.info("Creating database")
     create_db(DATABASE_URL)
@@ -176,3 +209,6 @@ if __name__ == "__main__":
 
     logging.info("Inserting tips")
     insert_tips(DATASET_PATH)
+
+    logging.info("Inserting checkins")
+    insert_checkins(DATASET_PATH)

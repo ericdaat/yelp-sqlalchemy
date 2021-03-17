@@ -32,7 +32,7 @@ class User(Base):
 
     user_id = db.Column(db.String(64), primary_key=True)
     review_count = db.Column(db.Integer())
-    yelping_since = db.Column(db.String(64))  # TODO: check why DateTime fails
+    yelping_since = db.Column(db.DateTime())
     useful = db.Column(db.Integer())
     funny = db.Column(db.Integer())
     cool = db.Column(db.Integer())
@@ -120,3 +120,14 @@ class Tip(Base):
     )
     text = db.Column(db.Text())
     compliment_count = db.Column(db.Integer())
+
+
+class Checkin(Base):
+    __tablename__ = "checkins"
+
+    checkin_id = db.Column(db.Integer(), primary_key=True)
+    date = db.Column(db.DateTime())
+    business_id = db.Column(
+        db.String(64),
+        db.ForeignKey(Business.business_id)
+    )
