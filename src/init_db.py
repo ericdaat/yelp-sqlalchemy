@@ -9,7 +9,7 @@ from src.config import DATABASE_URL, DATASET_PATH
 from src.model import (
     metadata, engine, Session,
     User, Business, BusinessCategory,
-    Review
+    Review, Tip
 )
 
 
@@ -54,9 +54,7 @@ def insert_users(dataset_path):
                 compliment_photos=row["compliment_photos"]
             )
             session.add(user)
-
         session.commit()
-
     session.close()
 
 
@@ -107,9 +105,7 @@ def insert_businesses(dataset_path):
                             .first()
             business.categories.append(category)
             session.add(business)
-
         session.commit()
-
     session.close()
 
 
@@ -137,9 +133,31 @@ def insert_reviews(dataset_path):
             )
 
             session.add(review)
-
         session.commit()
 
+    session.close()
+
+
+def insert_tips(dataset_path):
+    session = Session()
+
+    dfs = pd.read_json(
+        os.path.join(dataset_path, "yelp_academic_dataset_tip.json"),
+        lines=True,
+        chunksize=10000
+    )
+
+    for df_chunk in dfs:
+        for i, row in df_chunk.iterrows():
+            tip = Tip(
+                date = row["date"],
+                user_id = row["user_id"],
+                business_id = row["business_id"],
+                text = row["text"],
+                compliment_count = row["compliment_count"]
+            )
+            session.add(tip)
+        session.commit()
     session.close()
 
 
@@ -153,5 +171,8 @@ if __name__ == "__main__":
     logging.info("Inserting businesses")
     insert_businesses(DATASET_PATH)
 
-    logging.info("Creating reviews")
+    logging.info("Inserting reviews")
     insert_reviews(DATASET_PATH)
+
+    logging.info("Inserting tips")
+    insert_tips(DATASET_PATH)

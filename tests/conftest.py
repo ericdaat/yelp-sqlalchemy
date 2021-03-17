@@ -9,3 +9,4 @@ def pytest_configure():
     init_db.insert_users(TEST_DATASET_PATH)
     init_db.insert_businesses(TEST_DATASET_PATH)
     init_db.insert_reviews(TEST_DATASET_PATH)
+    init_db.insert_tips(TEST_DATASET_PATH)

@@ -86,7 +86,7 @@ class BusinessCategory(Base):
     )
 
 class Review(Base):
-    __tablename__ = "review"
+    __tablename__ = "reviews"
 
     review_id = db.Column(db.String(64), primary_key=True)
     date = db.Column(db.DateTime())
@@ -103,3 +103,20 @@ class Review(Base):
     funny = db.Column(db.Integer())
     cool = db.Column(db.Integer())
     text = db.Column(db.Text())
+
+
+class Tip(Base):
+    __tablename__ = "tips"
+
+    tip_id = db.Column(db.Integer(), primary_key=True)
+    date = db.Column(db.DateTime())
+    user_id = db.Column(
+        db.String(64),
+        db.ForeignKey(User.user_id)
+    )
+    business_id = db.Column(
+        db.String(64),
+        db.ForeignKey(Business.business_id)
+    )
+    text = db.Column(db.Text())
+    compliment_count = db.Column(db.Integer())
